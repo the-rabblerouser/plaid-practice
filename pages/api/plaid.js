@@ -1,5 +1,19 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import nextConnect from 'next-connect';
 
-export default (req, res) => {
+// import { Client, environments } from 'plaid';
+
+// const { PLAID_CLIENT_ID, PLAID_SECRET } = process.env;
+
+// const client = new Client({
+// 	clientID: PLAID_CLIENT_ID,
+// 	secret: PLAID_SECRET,
+// 	env: environments.sandbox,
+// });
+
+const handler = nextConnect();
+
+handler.get((req, res) => {
 	res.status(200).json({ name: 'plaid' });
-};
+});
+
+export default handler;
