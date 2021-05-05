@@ -15,6 +15,7 @@
     "plaid": "^8.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-plaid-link": "^3.1.0",
     "swr": "^0.5.3"
   }
 }
