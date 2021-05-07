@@ -7,7 +7,7 @@ const App = () => {
 	//currently linktoken is not being created on create_link_token api
 	const generateToken = async () => {
 		const response = await fetch('/api/create_link_token', {
-			method: 'POST',
+			method: 'GET',
 		});
 		const data = await response.json();
 		setLinkToken(data.link_token);
