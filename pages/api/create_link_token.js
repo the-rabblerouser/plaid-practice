@@ -10,8 +10,6 @@ const client = new Client({
 	env: environments.sandbox,
 });
 
-console.log(client);
-
 const handler = nextConnect();
 
 handler.get(async (req, res) => {
