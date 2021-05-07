@@ -13,22 +13,23 @@ const client = new Client({
 const handler = nextConnect();
 
 handler.get(async (req, res) => {
+	const configs = {
+		user: {
+			client_user_id: '123-test-user-id',
+		},
+		client_name: 'Plaid Test App',
+		products: ['auth', 'transactions'],
+		country_codes: ['US'],
+		language: 'en',
+		account_filters: {
+			depository: {
+				account_subtypes: ['checking', 'savings'],
+			},
+		},
+	};
+
 	try {
-		const response = await client.createLinkToken({
-			user: {
-				client_user_id: '123-test-user-id',
-			},
-			client_name: 'Plaid Test App',
-			products: ['auth', 'transactions'],
-			country_codes: ['US'],
-			language: 'en',
-			webhook: 'https://sample-web-hook.com',
-			account_filters: {
-				depository: {
-					account_subtypes: ['checking', 'savings'],
-				},
-			},
-		});
+		const response = await client.createLinkToken(configs);
 		return res.send({ link_token: response.link_token });
 	} catch (err) {
 		return res.send({ err: err.message });
