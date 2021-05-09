@@ -1,11 +1,18 @@
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 
+import { set_link_token } from '../actions/set_link_token';
+import { set_access_token } from '../actions/set_access_token';
 import Link from '../components/Link';
 
 const App = () => {
-	const [linkToken, setLinkToken] = useState(null);
-	const [access_token, setAccess_token] = useState();
+	const linkToken = useSelector(({ linkToken }) => linkToken);
+	const accessToken = useSelector(({ accessToken }) => accessToken);
+	// const [linkToken, setLinkToken] = useState(null);
+	// const [access_token, setAccess_token] = useState();
+
+	const dispatch = useDispatch();
 
 	//currently linktoken is not being created on create_link_token api
 	const generateToken = async () => {
@@ -13,7 +20,8 @@ const App = () => {
 			method: 'GET',
 		});
 		const data = await response.json();
-		setLinkToken(data.link_token);
+		// setLinkToken(data.link_token);
+		dispatch(set_link_token(data.link_token));
 	};
 	useEffect(() => {
 		generateToken();
@@ -26,10 +34,10 @@ const App = () => {
 		});
 		// // Handle response ...
 		const data = res.data.access_token;
-		setAccess_token(data);
+		dispatch(set_access_token(data));
 	};
 
-	console.log(access_token);
+	console.log(accessToken);
 	return linkToken != null ? (
 		<Link linkToken={linkToken} setAccessToken={setAccessToken} />
 	) : (

@@ -1,16 +1,22 @@
 import Head from 'next/head';
 import '../styles/globals.css';
 
+import { Provider } from 'react-redux';
+import { useStore } from '../store';
+
 function MyApp({ Component, pageProps }) {
+	const store = useStore(pageProps.initialReduxState);
 	return (
 		<>
 			<Head>
-				<title>My page title</title>
+				<title>Plaid</title>
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
 				<meta charset="UTF-8" />
 			</Head>
-			<Component {...pageProps} />
+			<Provider store={store}>
+				<Component {...pageProps} />
+			</Provider>
 		</>
 	);
 }
