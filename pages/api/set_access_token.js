@@ -12,14 +12,15 @@ const client = new Client({
 
 const handler = nextConnect();
 
-handler.get(async (req, res) => {
+handler.post(async (req, res) => {
 	try {
-		const { publick_token } = req.body;
+		const { public_token } = req.body;
 
-		const res = await client.exchangePublicToken(publick_token);
+		const { access_token, item_id } = await client.exchangePublicToken(
+			public_token
+		);
 
-		// const itemId = res.item_id;
-		return res.send({ access_token: res.access_token });
+		res.send({ access_token, item_id });
 	} catch (e) {
 		if (!publick_token) {
 			return 'no public token';
