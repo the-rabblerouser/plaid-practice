@@ -1,31 +1,51 @@
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
-import styles from '../styles/Home.module.css';
+import { set_link_token } from '../actions/set_link_token';
+import { set_access_token } from '../actions/set_access_token';
 
-export default function Home() {
-	const [token, setToken] = useState(null);
+import Link from '../components/Link';
+
+const App = () => {
+	const router = useRouter();
+
+	const linkToken = useSelector(({ linkToken }) => linkToken);
+
+	const dispatch = useDispatch();
+
+	const generateToken = async () => {
+		// get public_token
+		const response = await fetch('/api/create_link_token', {
+			method: 'GET',
+		});
+		const data = await response.json();
+		dispatch(set_link_token(data.link_token));
+	};
 
 	useEffect(() => {
-		async () => {
-			const res = await axios.post('localhost:3000/api/create_link_token');
-			const data = res.data.link_token;
-			setToken(data);
-		};
+		generateToken();
 	}, []);
 
-	console.log(token);
+	const setAccessToken = async (public_token) => {
+		// send public_token to server
+		const res = await axios.post('/api/set_access_token', {
+			public_token,
+		});
+		// // Handle response ...
+		const data = res.data.access_token;
+		dispatch(set_access_token(data));
 
-	return (
-		<div className={styles.container}>
-			<>
-				<div className="App">
-					//Passes down created Link token to Link component
-					{/* <Link token={token} /> */}
-				</div>
-			</>
-		</div>
+		router.push('/transactions');
+	};
+
+	return linkToken != null ? (
+		<Link linkToken={linkToken} setAccessToken={setAccessToken} />
+	) : (
+		<></>
 	);
-}
+};
+
+export default App;

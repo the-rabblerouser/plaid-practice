@@ -10,12 +10,22 @@ const client = new Client({
 	env: environments.sandbox,
 });
 
-console.log(client);
-
 const handler = nextConnect();
 
-handler.get((req, res) => {
-	res.status(200).json({ name: 'plaid' });
+handler.post(async (req, res) => {
+	try {
+		const { public_token } = req.body;
+
+		const { access_token, item_id } = await client.exchangePublicToken(
+			public_token
+		);
+
+		res.send({ access_token, item_id });
+	} catch (e) {
+		if (!publick_token) {
+			return 'no public token';
+		}
+	}
 });
 
 export default handler;
