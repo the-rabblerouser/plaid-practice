@@ -1,14 +1,13 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 
-const Link = (props) => {
-	const onSuccess = (token, metadata) => {
-		// console.log('onSuccess', token, metadata);
-		props.setAccessToken(token);
+const Link = ({ linkToken, setAccessToken }) => {
+	const onSuccess = (token) => {
+		setAccessToken(token);
 	};
 
 	const config = {
-		token: props.linkToken,
+		token: linkToken,
 		onSuccess,
 	};
 
