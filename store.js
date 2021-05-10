@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { createStore, applyMiddleware, Dispatch } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 let store;
@@ -7,6 +7,7 @@ let store;
 const initialState = {
 	linkToken: null,
 	accessToken: undefined,
+	transactions: [],
 };
 
 const reducer = (state, action) => {
@@ -21,6 +22,12 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				accessToken: action.payload,
+			};
+		}
+		case 'SET_TRANSACTIONS': {
+			return {
+				...state,
+				transactions: [action.payload],
 			};
 		}
 		default:

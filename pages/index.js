@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { set_link_token } from '../actions/set_link_token';
 import { set_access_token } from '../actions/set_access_token';
+import { set_transactions } from '../actions/set_transactions';
 
 import Link from '../components/Link';
 
@@ -13,6 +14,7 @@ const App = () => {
 	const router = useRouter();
 
 	const linkToken = useSelector(({ linkToken }) => linkToken);
+	const accessToken = useSelector(({ accessToken }) => accessToken);
 
 	const dispatch = useDispatch();
 
@@ -34,15 +36,33 @@ const App = () => {
 		const res = await axios.post('/api/set_access_token', {
 			public_token,
 		});
-		// // Handle response ...
+		// Handle response ...
 		const data = res.data.access_token;
 		dispatch(set_access_token(data));
-
 		router.push('/transactions');
 	};
 
+	const getTransactions = async () => {
+		// send accessToken to server
+		const res = await axios.post('/api/transactions', {
+			accessToken,
+		});
+		// Handle response ...
+
+		const data = res.data.transactions;
+		dispatch(set_transactions(data));
+	};
+
+	useEffect(() => {
+		if (accessToken) {
+			getTransactions();
+		}
+	}, [accessToken]);
+
 	return linkToken != null ? (
-		<Link linkToken={linkToken} setAccessToken={setAccessToken} />
+		<>
+			<Link linkToken={linkToken} setAccessToken={setAccessToken} />
+		</>
 	) : (
 		<></>
 	);
