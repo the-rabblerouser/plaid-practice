@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 
 const Transactions = () => {
 	const transactions = useSelector(({ transactions }) => transactions);
-	console.log(transactions[0]);
 
 	return (
 		<>
