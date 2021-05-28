@@ -10,6 +10,8 @@ import { set_transactions } from '../actions/set_transactions';
 
 import Link from '../components/Link';
 
+import styles from '../styles/Home.module.css';
+
 const App = () => {
 	const router = useRouter();
 
@@ -60,11 +62,11 @@ const App = () => {
 	}, [accessToken]);
 
 	return linkToken != null ? (
-		<>
+		<div className={styles.container}>
 			<Link linkToken={linkToken} setAccessToken={setAccessToken} />
-		</>
+		</div>
 	) : (
-		<></>
+		<div className={styles.container}>Loading...</div>
 	);
 };
 

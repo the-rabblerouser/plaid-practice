@@ -1,6 +1,8 @@
 import React from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 
+import styles from '../styles/Home.module.css';
+
 const Link = ({ linkToken, setAccessToken }) => {
 	const onSuccess = (token) => {
 		setAccessToken(token);
@@ -15,7 +17,7 @@ const Link = ({ linkToken, setAccessToken }) => {
 
 	return (
 		<>
-			<button onClick={() => open()} disabled={!ready}>
+			<button className={styles.code} onClick={() => open()} disabled={!ready}>
 				Link account
 			</button>
 		</>
