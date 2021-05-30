@@ -18,7 +18,7 @@ const Link = ({ linkToken, setAccessToken }) => {
 	return (
 		<>
 			<button className={styles.code} onClick={() => open()} disabled={!ready}>
-				Link account
+				Link Account
 			</button>
 		</>
 	);
