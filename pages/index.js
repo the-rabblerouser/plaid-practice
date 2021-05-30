@@ -8,6 +8,8 @@ import { set_link_token } from '../actions/set_link_token';
 import { set_access_token } from '../actions/set_access_token';
 import { set_transactions } from '../actions/set_transactions';
 
+import Navbar from '../components/Navbar';
+import Transactions from '../components/Transactions';
 import Link from '../components/Link';
 
 import styles from '../styles/Home.module.css';
@@ -41,7 +43,7 @@ const App = () => {
 		// Handle response ...
 		const data = res.data.access_token;
 		dispatch(set_access_token(data));
-		router.push('/transactions');
+		// router.push('/transactions');
 	};
 
 	const getTransactions = async () => {
@@ -61,12 +63,18 @@ const App = () => {
 		}
 	}, [accessToken]);
 
-	return linkToken != null ? (
-		<div className={styles.container}>
-			<Link linkToken={linkToken} setAccessToken={setAccessToken} />
-		</div>
-	) : (
-		<div className={styles.container}>Loading...</div>
+	return (
+		<>
+			<Navbar />
+			{linkToken != null ? (
+				<div className={styles.container}>
+					<Link linkToken={linkToken} setAccessToken={setAccessToken} />
+				</div>
+			) : (
+				<div className={styles.container}>Loading...</div>
+			)}
+			{!!accessToken && <Transactions />}
+		</>
 	);
 };
 
