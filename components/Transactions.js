@@ -9,7 +9,6 @@ const Transactions = () => {
 		<>
 			<div className={style.container}>
 				<div className="nav-contain">
-					<h1>Transactions</h1>
 					<div className="transactions">
 						{transactions[0]?.map(
 							({ transaction_id, date, name, category, amount }) => {
